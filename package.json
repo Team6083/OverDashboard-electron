@@ -41,7 +41,7 @@
     "canvas-gauges": "^2.1.5",
     "d3": "^5.7.0",
     "electron-squirrel-startup": "^1.0.0",
-    "jquery": "^3.4.1",
+    "jquery": "^3.5.0",
     "popper.js": "^1.12.9",
     "tcp-ping": "^0.1.1",
     "wpilib-nt-client": "^1.7.1"
