@@ -10,7 +10,7 @@ const client = new wpilib_NT.Client();
 if (require('electron-squirrel-startup')) return;
 
 // The client will try to reconnect after 1 second
-client.setReconnectDelay(1000)
+client.setReconnectDelay(1000);
 
 /** Module to control application life. */
 const app = electron.app;
@@ -21,7 +21,7 @@ const BrowserWindow = electron.BrowserWindow;
 /** Module for receiving messages from the BrowserWindow */
 const ipc = electron.ipcMain;
 
-const globalShortcut = electron.globalShortcut
+const globalShortcut = electron.globalShortcut;
 
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
@@ -32,16 +32,16 @@ const globalShortcut = electron.globalShortcut
 
 let mainWindow;
 
-let connectedFunc,
-    ready = false;
-
+let connectedFunc, ready = false;
 
 // Foward NT values to BrowserWindow
 let clientDataListener = (key, val, valType, mesgType, id, flags) => {
+    // handle boolean value
     if (val === 'true' || val === 'false') {
         val = val === 'true';
     }
 
+    // send data to BrowserWindow
     mainWindow.webContents.send(mesgType, {
         key,
         val,
@@ -67,17 +67,17 @@ function createWindow() {
         // Send connection message to the window if if the message is ready
         if (connectedFunc) connectedFunc();
     });
+
     ipc.on('add', (ev, mesg) => {
         client.Assign(mesg.val, mesg.key, (mesg.flags & 1) === 1);
     }); // Handle add from BrowserWindow
     ipc.on('update', (ev, mesg) => {
         client.Update(mesg.id, mesg.val);
-        console.log(mesg.id, mesg.val);
     }); // Handle update from BrowserWindow
     ipc.on('windowError', (ev, error) => {
         console.log(error);
     }); // Handle error from BrowserWindow
-    
+
     // Create the browser window.
     mainWindow = new BrowserWindow({
         width: 1450,
@@ -120,29 +120,40 @@ function createWindow() {
 
     globalShortcut.register('f5', function () {
         console.log('f5 is pressed')
-        mainWindow.reload()
+        mainWindow.reload();
     })
     globalShortcut.register('CommandOrControl+R', function () {
         console.log('CommandOrControl+R is pressed')
-        mainWindow.reload()
+        mainWindow.reload();
     })
 
     // Start NT connection processs
     startNTconnect();
 }
 
-var targetHost = "";
+let targetHost = "";
+
+const teamNumber = process.env.teamNumber || "6083";
 
 function startNTconnect() {
-    let NtAddress = ["172.22.11.2", "10.60.83.2", "roborio-6083-frc.local", "127.0.0.1"]
+    let roboRioIP = "10.";
+    if (teamNumber.length <= 2) {
+        roboRioIP += "0." + teamNumber;
+    } else {
+        roboRioIP += teamNumber.substr(0, teamNumber.length - 2) + "." + teamNumber.substr(teamNumber.length - 2, 2);
+    }
+    roboRioIP += ".2";
+    let NtAddress = ["172.22.11.2", roboRioIP, "roborio-" + teamNumber + "-frc.local", "127.0.0.1"]
 
     NtAddress.forEach(function (host) {
-        tcpp.probe(host, 1735, function (err, available) {
-            if (available) {
-                console.log(host);
-                targetHost = host;
-            }
-        });
+        if (targetHost === "") {
+            tcpp.probe(host, 1735, function (_, available) {
+                if (available) {
+                    console.log("Set target to: " + host);
+                    targetHost = host;
+                }
+            });
+        }
     });
     // Scan ip to find roborio.
 
@@ -152,30 +163,28 @@ function startNTconnect() {
         }
         else {
             connectToNT(targetHost);
-            setTimeout(function(){
+            setTimeout(function () {
                 client.Update(client.getKeyID("/SmartDashboard/NT/ip"), targetHost);
                 readPing();
-            },1000);
+            }, 1000);
         }
     }, 5000);
     // Wait 5 sec before connect
 }
 
 function readPing() {
-    tcpp.ping({ address: targetHost, port: 1735}, function(err, data) {
+    tcpp.ping({ address: targetHost, port: 1735 }, function (_, data) {
         client.Update(client.getKeyID("/SmartDashboard/NT/ping"), Math.round(parseFloat(data.avg)));
-        console.log(parseFloat(data.avg));
-        setTimeout(function(){
-            client.Update(client.getKeyID("/SmartDashboard/NT/ip"), targetHost);
+        setTimeout(function () {
             readPing();
-        },5000);
+        }, 3000);
     });
 }
 
 // Connect to NT with given address and port.
 function connectToNT(address, port) {
     console.log(`Trying to connect to ${address}` + (port ? ':' + port : ''));
-    let callback = (connected, err) => {
+    let callback = (connected) => {
         console.log('Sending status');
         mainWindow.webContents.send('connected', connected);
     };
