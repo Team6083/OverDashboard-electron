@@ -393,6 +393,9 @@ $("#compCloseLoop").click(function () {
 var cam1URL = "axis-camera1.local";
 var cam2URL = "10.60.83.2";
 
+$("#cam1IP").html(cam1URL);
+$("#cam2IP").html(cam2URL);
+
 $("#cam1Load").click(function () {
   $(this).hide();
   loadCameraOnConnect({
