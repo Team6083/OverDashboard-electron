@@ -191,11 +191,11 @@ NetworkTables.addKeyListener("/SmartDashboard/Auto choices/selected", function (
 
 
 //Auto mode
-NetworkTables.addKeyListener("/SmartDashboard/Target Angle", function (key, value, isNew) {
+NetworkTables.addKeyListener("/limelight/tx", function (key, value, isNew) {
   $("#limeTX").html(value);
 }, true);
 
-NetworkTables.addKeyListener("/SmartDashboard/Error Angle", function (key, value, isNew) {
+NetworkTables.addKeyListener("/limelight/tv", function (key, value, isNew) {
   $("#limeTV").html(value);
 }, true);
 
@@ -244,27 +244,27 @@ NetworkTables.addKeyListener("/SmartDashboard/drive/boost", function (key, value
 }, true);
 
 $("#driveBoost").click(function () {
-  var valKey = "/SmartDashboard/drive/reverse";
+  var valKey = "/SmartDashboard/drive/boost";
   NetworkTables.putValue(valKey, !NetworkTables.getValue(valKey));
 });
 
 // Shoot
-NetworkTables.addKeyListener("/SmartDashboard/up/enc", function (key, value, isNew) {
+NetworkTables.addKeyListener("/SmartDashboard/shoot/turnPower", function (key, value, isNew) {
   setPWMBar("turnPowerB", value);
   $("#turnPower").html(value);
 }, true);
 
-NetworkTables.addKeyListener("/SmartDashboard/up/targetStep", function (key, value, isNew) {
+NetworkTables.addKeyListener("/SmartDashboard/shoot/shootPower", function (key, value, isNew) {
   setPWMBar("shootPowerB", value);
   $("#shootPower").html(value);
 }, true);
 
-NetworkTables.addKeyListener("/SmartDashboard/up/motorOut", function (key, value, isNew) {
+NetworkTables.addKeyListener("/SmartDashboard/shoot/shootSpeed", function (key, value, isNew) {
   setShootSpeedBar("shootSpeedB", value);
   $("#shootSpeed").html(value);
 }, true);
 
-NetworkTables.addKeyListener("/SmartDashboard/panel/hatch", function (key, value, isNew) {
+NetworkTables.addKeyListener("/SmartDashboard/shoot/lsw", function (key, value, isNew) {
   if (value) {
     $("#turnLSW").removeClass("badge-light");
     $("#turnLSW").addClass("badge-success");
@@ -274,7 +274,7 @@ NetworkTables.addKeyListener("/SmartDashboard/panel/hatch", function (key, value
   }
 }, true);
 
-NetworkTables.addKeyListener("/SmartDashboard/panel/hatch", function (key, value, isNew) {
+NetworkTables.addKeyListener("/SmartDashboard/shoot/rsw", function (key, value, isNew) {
   if (value) {
     $("#turnRSW").removeClass("badge-light");
     $("#turnRSW").addClass("badge-success");
@@ -302,63 +302,47 @@ NetworkTables.addKeyListener("/SmartDashboard/drive/rightDis", function (key, va
 
 // Transport
 
-NetworkTables.addKeyListener("/SmartDashboard/up/targetStep", function (key, value, isNew) {
+NetworkTables.addKeyListener("/SmartDashboard/transport/power", function (key, value, isNew) {
   setPWMBar("transPowerB", value);
   $("#transPower").html(value);
 }, true);
 
-NetworkTables.addKeyListener("/SmartDashboard/up/targetStep", function (key, value, isNew) {
+NetworkTables.addKeyListener("/SmartDashboard/transport/dist", function (key, value, isNew) {
   setTransDistBar("transDistB", value);
   $("#transDist").html(value);
 }, true);
 
 // Intake
 
-NetworkTables.addKeyListener("/SmartDashboard/up/targetStep", function (key, value, isNew) {
+NetworkTables.addKeyListener("/SmartDashboard/intake/power", function (key, value, isNew) {
   setPWMBar("intakePowerB", value);
   $("#intakePower").html(value);
 }, true);
 
-NetworkTables.addKeyListener("/SmartDashboard/up/targetStep", function (key, value, isNew) {
-  $("#lSOL").removeClass("badge-light");
-  $("#lSOL").removeClass("badge-success");
-  $("#lSOL").removeClass("badge-warning");
+NetworkTables.addKeyListener("/SmartDashboard/intake/sol", function (key, value, isNew) {
+  $("#intakeSOL").removeClass("badge-light");
+  $("#intakeSOL").removeClass("badge-success");
+  $("#intakeSOL").removeClass("badge-warning");
   if (value === 1) {
-    $("#lSOL").html("forw.");
-    $("#lSOL").addClass("badge-success");
+    $("#intakeSOL").html("forw.");
+    $("#intakeSOL").addClass("badge-success");
   } else if (value === 2) {
-    $("#lSOL").html("rev.");
-    $("#lSOL").addClass("badge-warning");
+    $("#intakeSOL").html("rev.");
+    $("#intakeSOL").addClass("badge-warning");
   } else if (value === 0) {
-    $("#lSOL").html("off");
-    $("#lSOL").addClass("badge-light");
-  }
-}, true);
-
-NetworkTables.addKeyListener("/SmartDashboard/up/targetStep", function (key, value, isNew) {
-  $("#rSOL").removeClass("badge-light");
-  $("#rSOL").removeClass("badge-success");
-  $("#rSOL").removeClass("badge-warning");
-  if (value === 1) {
-    $("#rSOL").html("forw.");
-    $("#rSOL").addClass("badge-success");
-  } else if (value === 2) {
-    $("#rSOL").html("rev.");
-    $("#rSOL").addClass("badge-warning");
-  } else if (value === 0) {
-    $("#rSOL").html("off");
-    $("#rSOL").addClass("badge-light");
+    $("#intakeSOL").html("off");
+    $("#intakeSOL").addClass("badge-light");
   }
 }, true);
 
 // Climb
 
-NetworkTables.addKeyListener("/SmartDashboard/up/targetStep", function (key, value, isNew) {
+NetworkTables.addKeyListener("/SmartDashboard/climb/power", function (key, value, isNew) {
   setPWMBar("climbPowerB", value);
   $("#climbPower").html(value);
 }, true);
 
-NetworkTables.addKeyListener("/SmartDashboard/panel/hatch", function (key, value, isNew) {
+NetworkTables.addKeyListener("/SmartDashboard/climb/sw", function (key, value, isNew) {
   if (value) {
     $("#climbSW").removeClass("badge-light");
     $("#climbSW").addClass("badge-success");
@@ -392,9 +376,11 @@ $("#compCloseLoop").click(function () {
 // Camera
 var cam1URL = "axis-camera1.local";
 var cam2URL = "10.60.83.2";
+var cam3URL = "10.60.83.2";
 
 $("#cam1IP").html(cam1URL);
 $("#cam2IP").html(cam2URL);
+$("#cam3IP").html(cam3URL);
 
 $("#cam1Load").click(function () {
   $(this).hide();
@@ -415,6 +401,21 @@ $("#cam2Load").click(function () {
   $(this).hide();
   loadCameraOnConnect({
     container: '#cam2',
+    port: 1181,
+    host: cam2URL,
+    image_url: '/stream.mjpg',
+    data_url: '/settings.json',
+    attrs: {
+      width: 320,
+      height: 240
+    }
+  });
+});
+
+$("#cam3Load").click(function () {
+  $(this).hide();
+  loadCameraOnConnect({
+    container: '#cam3',
     port: 1181,
     host: cam2URL,
     image_url: '/stream.mjpg',

@@ -89,7 +89,8 @@
                     <div class="col">
                       <button type="button" class="btn btn-outline-danger btn-sm" data-toggle="button"
                         id="driveRev">Drive Reverse</button>
-                      <button type="button" class="btn btn-outline-info btn-sm" data-toggle="button" id="driveBoost">Drive
+                      <button type="button" class="btn btn-outline-info btn-sm" data-toggle="button"
+                        id="driveBoost">Drive
                         Boost</button>
                     </div>
                   </div>
@@ -156,10 +157,7 @@
                     </div>
                     <div class="mt-2">
                       <h6>
-                        L SOL: <span class="badge badge-secondary" id="lSOL">n/a</span>
-                      </h6>
-                      <h6>
-                        R SOL: <span class="badge badge-secondary" id="rSOL">n/a</span>
+                        SOL: <span class="badge badge-secondary" id="intakeSOL">n/a</span>
                       </h6>
                     </div>
                   </div>
@@ -219,18 +217,30 @@
       <div class="col-lg-6">
         <div class="card">
           <div class="card-body">
+            <div class="row">
+              <div class="col">
+                <h5 class="card-title">
+                  Limelight
+                  <small id="cam1IP">n/a</small>
+                </h5>
+                <button type="button" class="btn btn-primary btn-lg" id="cam1Load">Load Cam1</button>
+                <div id="cam1"></div>
+              </div>
+              <div class="col">
+                <h5 class="card-title">
+                  Camera2
+                  <small id="cam2IP">n/a</small>
+                </h5>
+                <button type="button" class="btn btn-primary btn-lg" id="cam2Load">Load Cam2</button>
+                <div id="cam2"></div>
+              </div>
+            </div>
             <h5 class="card-title">
-              Limelight
-              <small id="cam1IP">n/a</small>
+              Camera3
+              <small id="cam3IP">n/a</small>
             </h5>
-            <button type="button" class="btn btn-primary btn-lg" id="cam1Load">Load Cam1</button>
-            <div id="cam1"></div>
-            <h5 class="card-title">
-              Camera2
-              <small id="cam2IP">n/a</small>
-            </h5>
-            <button type="button" class="btn btn-primary btn-lg" id="cam2Load">Load Cam2</button>
-            <div id="cam2"></div>
+            <button type="button" class="btn btn-primary btn-lg" id="cam3Load">Load Cam3</button>
+            <div id="cam3"></div>
           </div>
         </div>
       </div>
