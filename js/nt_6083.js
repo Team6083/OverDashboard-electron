@@ -146,8 +146,6 @@ NetworkTables.addKeyListener("/FMSInfo/StationNumber", function (key, value, isN
 }, true);
 
 
-//
-//
 //Auto settings
 var autoPoint;
 var autoChoices;
@@ -179,7 +177,7 @@ $("#autoDelay").change(function () {
 });
 
 attachSelectToSendableChooser("#autoChoice", "/SmartDashboard/Auto choices");
-attachSelectToSendableChooser("#autoStation", "/SmartDashboard/Auto point choices");
+attachSelectToSendableChooser("#autoPosition", "/SmartDashboard/Auto point choices");
 
 NetworkTables.addKeyListener("/SmartDashboard/Auto point choices/selected", function (key, value, isNew) {
   autoPoint = value;
@@ -194,11 +192,11 @@ NetworkTables.addKeyListener("/SmartDashboard/Auto choices/selected", function (
 
 //Auto mode
 NetworkTables.addKeyListener("/SmartDashboard/Target Angle", function (key, value, isNew) {
-  $("#targetAngle").html(value);
+  $("#limeTX").html(value);
 }, true);
 
 NetworkTables.addKeyListener("/SmartDashboard/Error Angle", function (key, value, isNew) {
-  $("#errAngle").html(value);
+  $("#limeTV").html(value);
 }, true);
 
 NetworkTables.addKeyListener("/SmartDashboard/CurrentStep", function (key, value, isNew) {
@@ -211,9 +209,7 @@ NetworkTables.addKeyListener("/SmartDashboard/Timer", function (key, value, isNe
 
 
 
-//
-//
-//DriveBase
+// DriveBase
 NetworkTables.addKeyListener("/SmartDashboard/drive/leftSpeed", function (key, value, isNew) {
   speedL.set(value);
   $("#speedL").html(value);
@@ -238,43 +234,64 @@ $("#driveRev").click(function () {
   NetworkTables.putValue(valKey, !NetworkTables.getValue(valKey));
 });
 
-//Up Ass
-NetworkTables.addKeyListener("/SmartDashboard/up/enc", function (key, value, isNew) {
-  setUpAssBar("upEncB", value);
-  $("#upEnc").html(value);
-}, true);
-
-NetworkTables.addKeyListener("/SmartDashboard/up/targetStep", function (key, value, isNew) {
-  setUpAssBar("upTargetB", value);
-  $("#upTarget").html(value);
-}, true);
-
-NetworkTables.addKeyListener("/SmartDashboard/up/motorOut", function (key, value, isNew) {
-  setPWMBar("upOutB", value);
-  $("#upOut").html(value);
-}, true);
-
-NetworkTables.addKeyListener("/SmartDashboard/up/holdingOverride", function (key, value, isNew) {
+NetworkTables.addKeyListener("/SmartDashboard/drive/boost", function (key, value, isNew) {
   if (value) {
-    $("#upHoldOver").addClass("active");
+    $("#driveBoost").addClass("active");
   }
   else {
-    $("#upHoldOver").removeClass("active");
+    $("#driveBoost").removeClass("active");
   }
 }, true);
 
-$("#upHoldOver").click(function () {
-  var valKey = "/SmartDashboard/up/holdingOverride";
+$("#driveBoost").click(function () {
+  var valKey = "/SmartDashboard/drive/reverse";
   NetworkTables.putValue(valKey, !NetworkTables.getValue(valKey));
 });
 
-//SensorHub
+// Shoot
+NetworkTables.addKeyListener("/SmartDashboard/up/enc", function (key, value, isNew) {
+  setPWMBar("turnPowerB", value);
+  $("#turnPower").html(value);
+}, true);
+
+NetworkTables.addKeyListener("/SmartDashboard/up/targetStep", function (key, value, isNew) {
+  setPWMBar("shootPowerB", value);
+  $("#shootPower").html(value);
+}, true);
+
+NetworkTables.addKeyListener("/SmartDashboard/up/motorOut", function (key, value, isNew) {
+  setShootSpeedBar("shootSpeedB", value);
+  $("#shootSpeed").html(value);
+}, true);
+
+NetworkTables.addKeyListener("/SmartDashboard/panel/hatch", function (key, value, isNew) {
+  if (value) {
+    $("#turnLSW").removeClass("badge-light");
+    $("#turnLSW").addClass("badge-success");
+  } else {
+    $("#turnLSW").removeClass("badge-success");
+    $("#turnLSW").addClass("badge-light");
+  }
+}, true);
+
+NetworkTables.addKeyListener("/SmartDashboard/panel/hatch", function (key, value, isNew) {
+  if (value) {
+    $("#turnRSW").removeClass("badge-light");
+    $("#turnRSW").addClass("badge-success");
+  } else {
+    $("#turnRSW").removeClass("badge-success");
+    $("#turnRSW").addClass("badge-light");
+  }
+}, true);
+
+
+// SensorHub
 NetworkTables.addKeyListener("/SmartDashboard/SensorHub/heading", function (key, value, isNew) {
   compassC.value = value;
   $("#compass").html(value);
 }, true);
 
-//Drive Enc
+// Drive Enc
 NetworkTables.addKeyListener("/SmartDashboard/drive/leftDis", function (key, value, isNew) {
   $("#lEnc").html(value);
 }, true);
@@ -283,81 +300,73 @@ NetworkTables.addKeyListener("/SmartDashboard/drive/rightDis", function (key, va
   $("#rEnc").html(value);
 }, true);
 
-//ShootingAssembly
-NetworkTables.addKeyListener("/SmartDashboard/shoot/currentLeft", function (key, value, isNew) {
-  setAmpBar("shootClB", value, 30);
-  $("#shootCl").html(value);
+// Transport
+
+NetworkTables.addKeyListener("/SmartDashboard/up/targetStep", function (key, value, isNew) {
+  setPWMBar("transPowerB", value);
+  $("#transPower").html(value);
 }, true);
 
-NetworkTables.addKeyListener("/SmartDashboard/shoot/currentRight", function (key, value, isNew) {
-  setAmpBar("shootCrB", value, 30);
-  $("#shootCr").html(value);
+NetworkTables.addKeyListener("/SmartDashboard/up/targetStep", function (key, value, isNew) {
+  setTransDistBar("transDistB", value);
+  $("#transDist").html(value);
 }, true);
 
-NetworkTables.addKeyListener("/SmartDashboard/shoot/target", function (key, value, isNew) {
-  $("#shooterAngle").html(value);
-});
+// Intake
 
-NetworkTables.addKeyListener("/SmartDashboard/shoot/enc", function (key, value, isNew) {
-  $("#shooterCurrentAngle").html(value);
-});
+NetworkTables.addKeyListener("/SmartDashboard/up/targetStep", function (key, value, isNew) {
+  setPWMBar("intakePowerB", value);
+  $("#intakePower").html(value);
+}, true);
 
-NetworkTables.addKeyListener("/SmartDashboard/shoot/angleMotorOut", function (key, value, isNew) {
-  $("#angleMotorOut").html(value);
-  setPWMBar("angleMotorOutB", value);
-});
-
-NetworkTables.addKeyListener("/SmartDashboard/shoot/holdingOverride", function (key, value, isNew) {
-  if (value) {
-    $("#shootHoldOver").addClass("active");
-  } else {
-    $("#shootHoldOver").removeClass("active")
+NetworkTables.addKeyListener("/SmartDashboard/up/targetStep", function (key, value, isNew) {
+  $("#lSOL").removeClass("badge-light");
+  $("#lSOL").removeClass("badge-success");
+  $("#lSOL").removeClass("badge-warning");
+  if (value === 1) {
+    $("#lSOL").html("forw.");
+    $("#lSOL").addClass("badge-success");
+  } else if (value === 2) {
+    $("#lSOL").html("rev.");
+    $("#lSOL").addClass("badge-warning");
+  } else if (value === 0) {
+    $("#lSOL").html("off");
+    $("#lSOL").addClass("badge-light");
   }
-});
+}, true);
 
-$("#shootHoldOver").click(function () {
-  var valKey = "/SmartDashboard/shoot/holdingOverride";
-  NetworkTables.putValue(valKey, !NetworkTables.getValue(valKey));
-});
+NetworkTables.addKeyListener("/SmartDashboard/up/targetStep", function (key, value, isNew) {
+  $("#rSOL").removeClass("badge-light");
+  $("#rSOL").removeClass("badge-success");
+  $("#rSOL").removeClass("badge-warning");
+  if (value === 1) {
+    $("#rSOL").html("forw.");
+    $("#rSOL").addClass("badge-success");
+  } else if (value === 2) {
+    $("#rSOL").html("rev.");
+    $("#rSOL").addClass("badge-warning");
+  } else if (value === 0) {
+    $("#rSOL").html("off");
+    $("#rSOL").addClass("badge-light");
+  }
+}, true);
 
+// Climb
 
-//Panel Assembly
+NetworkTables.addKeyListener("/SmartDashboard/up/targetStep", function (key, value, isNew) {
+  setPWMBar("climbPowerB", value);
+  $("#climbPower").html(value);
+}, true);
 
 NetworkTables.addKeyListener("/SmartDashboard/panel/hatch", function (key, value, isNew) {
   if (value) {
-    $("#hatch").removeClass("badge-light");
-    $("#hatch").addClass("badge-success");
+    $("#climbSW").removeClass("badge-light");
+    $("#climbSW").addClass("badge-success");
   } else {
-    $("#hatch").removeClass("badge-success");
-    $("#hatch").addClass("badge-light");
+    $("#climbSW").removeClass("badge-success");
+    $("#climbSW").addClass("badge-light");
   }
 }, true);
-
-NetworkTables.addKeyListener("/SmartDashboard/panel/push", function (key, value, isNew) {
-  if (value) {
-    $("#push").addClass("badge-success");
-  } else {
-    $("#push").removeClass("badge-success");
-  }
-}, true);
-
-NetworkTables.addKeyListener("/SmartDashboard/panel/protectOverride", function (key, value, isNew) {
-  if (value) {
-    $("#hatchOverride").addClass("active");
-  } else {
-    $("#hatchOverride").removeClass("active")
-  }
-});
-
-$("#hatchOverride").click(function () {
-  var valKey = "/SmartDashboard/panel/protectOverride";
-  NetworkTables.putValue(valKey, !NetworkTables.getValue(valKey));
-});
-
-NetworkTables.addKeyListener("/SmartDashboard/panel/motorOut", function (key, value, isNew){
-  $("#hatchMotor").html(value);
-  setPWMBar("hatchMotorB", value);
-});
 
 //Pneumatic Assembly
 
@@ -380,7 +389,7 @@ $("#compCloseLoop").click(function () {
 });
 
 
-//Camera
+// Camera
 var cam1URL = "axis-camera1.local";
 var cam2URL = "10.60.83.2";
 

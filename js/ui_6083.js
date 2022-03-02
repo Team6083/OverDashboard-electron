@@ -92,8 +92,16 @@ function setPWMBar(id, val) {
 }
 //Drive Base
 
+function setShootSpeedBar(id, val) {
+  setBootstrapBar(0, -45000, id, val);
+  if (val > 0) {
+    $("#" + id).removeClass("bg-info").addClass("bg-warning");
+  } else {
+    $("#" + id).addClass("bg-info").removeClass("bg-warning");
+  }
+}
 
-function setUpAssBar(id, val) {
+function setTransDistBar(id, val) {
   setBootstrapBar(0, -45000, id, val);
   if (val > 0) {
     $("#" + id).removeClass("bg-info").addClass("bg-warning");

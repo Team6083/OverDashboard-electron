@@ -6,6 +6,7 @@ const electron = require('electron');
 const wpilib_NT = require('wpilib-nt-client');
 const client = new wpilib_NT.Client();
 
+const process = require('process');
 
 if (require('electron-squirrel-startup')) return;
 
@@ -85,7 +86,11 @@ function createWindow() {
         // The width and height of BrowserWindows
 
         show: false,
-        icon: __dirname + '/../images/icon.png'
+        icon: __dirname + '/../images/icon.png',
+        webPreferences: {
+            nodeIntegration: true,
+            contextIsolation: false,
+        }
     });
     // Move window to top (left) of screen.
     mainWindow.setPosition(0, 0);
@@ -109,6 +114,7 @@ function createWindow() {
         ready = false;
         connectedFunc = null;
         client.removeListener(clientDataListener);
+        process.exit();
     });
     mainWindow.on('unresponsive', () => {
         console.log('Main Window is unresponsive');
