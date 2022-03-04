@@ -176,19 +176,18 @@ $("#autoDelay").change(function () {
   }
 });
 
-attachSelectToSendableChooser("#autoChoice", "/SmartDashboard/Auto choices");
+attachSelectToSendableChooser("#autoChoice", "/SmartDashboard/Auto Choice");
 attachSelectToSendableChooser("#autoPosition", "/SmartDashboard/Auto point choices");
+
+NetworkTables.addKeyListener("/SmartDashboard/Auto Choice/selected", function (key, value, isNew) {
+  autoChoices = value;
+  updateAutoMsg();
+}, true);
 
 NetworkTables.addKeyListener("/SmartDashboard/Auto point choices/selected", function (key, value, isNew) {
   autoPoint = value;
   updateAutoMsg();
 }, true);
-
-NetworkTables.addKeyListener("/SmartDashboard/Auto choices/selected", function (key, value, isNew) {
-  autoChoices = value;
-  updateAutoMsg();
-}, true);
-
 
 //Auto mode
 NetworkTables.addKeyListener("/limelight/tx", function (key, value, isNew) {
@@ -203,7 +202,7 @@ NetworkTables.addKeyListener("/SmartDashboard/CurrentStep", function (key, value
   $("#autoStage").html(value);
 }, true);
 
-NetworkTables.addKeyListener("/SmartDashboard/Timer", function (key, value, isNew) {
+NetworkTables.addKeyListener("/SmartDashboard/AutoTimer", function (key, value, isNew) {
   $("#autoTimer").html(value);
 }, true);
 
@@ -234,20 +233,6 @@ $("#driveRev").click(function () {
   NetworkTables.putValue(valKey, !NetworkTables.getValue(valKey));
 });
 
-NetworkTables.addKeyListener("/SmartDashboard/drive/boost", function (key, value, isNew) {
-  if (value) {
-    $("#driveBoost").addClass("active");
-  }
-  else {
-    $("#driveBoost").removeClass("active");
-  }
-}, true);
-
-$("#driveBoost").click(function () {
-  var valKey = "/SmartDashboard/drive/boost";
-  NetworkTables.putValue(valKey, !NetworkTables.getValue(valKey));
-});
-
 // Shoot
 NetworkTables.addKeyListener("/SmartDashboard/shoot/turnPower", function (key, value, isNew) {
   setPWMBar("turnPowerB", value);
@@ -266,24 +251,33 @@ NetworkTables.addKeyListener("/SmartDashboard/shoot/shootSpeed", function (key, 
 
 NetworkTables.addKeyListener("/SmartDashboard/shoot/lsw", function (key, value, isNew) {
   if (value) {
-    $("#turnLSW").removeClass("badge-light");
+    $("#turnLSW").removeClass("badge-secondary");
     $("#turnLSW").addClass("badge-success");
   } else {
     $("#turnLSW").removeClass("badge-success");
-    $("#turnLSW").addClass("badge-light");
+    $("#turnLSW").addClass("badge-secondary");
   }
 }, true);
 
 NetworkTables.addKeyListener("/SmartDashboard/shoot/rsw", function (key, value, isNew) {
   if (value) {
-    $("#turnRSW").removeClass("badge-light");
+    $("#turnRSW").removeClass("badge-secondary");
     $("#turnRSW").addClass("badge-success");
   } else {
     $("#turnRSW").removeClass("badge-success");
-    $("#turnRSW").addClass("badge-light");
+    $("#turnRSW").addClass("badge-secondary");
   }
 }, true);
 
+NetworkTables.addKeyListener("/SmartDashboard/shoot/useLL", function (key, value, isNew) {
+  if (value) {
+    $("#limeLightOn").removeClass("badge-secondary");
+    $("#limeLightOn").addClass("badge-success");
+  } else {
+    $("#limeLightOn").removeClass("badge-success");
+    $("#limeLightOn").addClass("badge-secondary");
+  }
+}, true);
 
 // SensorHub
 NetworkTables.addKeyListener("/SmartDashboard/SensorHub/heading", function (key, value, isNew) {
@@ -344,11 +338,11 @@ NetworkTables.addKeyListener("/SmartDashboard/climb/power", function (key, value
 
 NetworkTables.addKeyListener("/SmartDashboard/climb/sw", function (key, value, isNew) {
   if (value) {
-    $("#climbSW").removeClass("badge-light");
+    $("#climbSW").removeClass("badge-secondary");
     $("#climbSW").addClass("badge-success");
   } else {
     $("#climbSW").removeClass("badge-success");
-    $("#climbSW").addClass("badge-light");
+    $("#climbSW").addClass("badge-secondary");
   }
 }, true);
 
@@ -374,7 +368,7 @@ $("#compCloseLoop").click(function () {
 
 
 // Camera
-var cam1URL = "axis-camera1.local";
+var cam1URL = "10.60.83.11";
 var cam2URL = "10.60.83.2";
 var cam3URL = "10.60.83.2";
 
@@ -386,9 +380,9 @@ $("#cam1Load").click(function () {
   $(this).hide();
   loadCameraOnConnect({
     container: '#cam1',
-    port: 80,
+    port: 5800,
     host: cam1URL,
-    image_url: '/mjpg/video.mjpg',
+    image_url: '/',
     data_url: '/css/common.css',
     attrs: {
       width: 320,
