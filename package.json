@@ -28,7 +28,7 @@
   },
   "homepage": "https://github.com/Team6083/OverDashboard-electron#readme",
   "devDependencies": {
-    "electron": "^17.1.0",
+    "electron": "^18.3.7",
     "electron-packager": "^15.4.0",
     "electron-winstaller": "^2.6.4",
     "mocha": "^9.2.1",
