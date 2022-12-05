@@ -28,8 +28,7 @@
   },
   "homepage": "https://github.com/Team6083/OverDashboard-electron#readme",
   "devDependencies": {
-    "electron": "^17.1.0",
-    "electron-packager": "^15.4.0",
+    "electron-packager": "^17.1.1",
     "electron-winstaller": "^2.6.4",
     "mocha": "^9.2.1",
     "mocha-junit-reporter": "^2.0.2",
@@ -39,7 +38,8 @@
   "dependencies": {
     "bootstrap": "^4.4.1",
     "canvas-gauges": "^2.1.5",
-    "d3": "^5.7.0",
+    "d3": "^7.7.0",
+    "electron": "^22.0.0",
     "electron-squirrel-startup": "^1.0.0",
     "jquery": "^3.5.0",
     "popper.js": "^1.12.9",
