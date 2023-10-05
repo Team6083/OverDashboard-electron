@@ -39,7 +39,7 @@
     "bootstrap": "^4.4.1",
     "canvas-gauges": "^2.1.5",
     "d3": "^7.7.0",
-    "electron": "^22.0.0",
+    "electron": "^22.3.25",
     "electron-squirrel-startup": "^1.0.0",
     "jquery": "^3.5.0",
     "popper.js": "^1.12.9",
