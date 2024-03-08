@@ -150,61 +150,37 @@
                 <h3>Main</h3>
                 <div class="content-wrapper">
                   <div class="row">
-                    <div class="col-4">
+                    <div class="col-6">
                       <h5 class="card-title">
                         Shooter
                       </h5>
-                      Turn Power: <span class="badge badge-secondary" id="turnPower">??</span>
-                      <div class="progress">
-                        <div class="progress-bar bg-info progress-bar-striped" role="progressbar" style="width: 50%"
-                          id="turnPowerB"></div>
-                      </div>
-                      Shoot Power: <span class="badge badge-secondary" id="shootPower">??</span>
-                      <div class="progress">
-                        <div class="progress-bar bg-info progress-bar-striped" role="progressbar" style="width: 50%"
-                          id="shootPowerB"></div>
-                      </div>
-                      Shoot Speed: <span class="badge badge-secondary" id="shootSpeed">??</span>
-                      <div class="progress">
-                        <div class="progress-bar bg-info" role="progressbar" style="width: 0%" id="shootSpeedB"></div>
-                      </div>
+                      <h6 class="text-primary">UpEncRate: <span class="badge badge-secondary" id="Sh.Up">??</span></h6>
+                      <h6 class="text-primary">UpEncRate: <span class="badge badge-secondary" id="Sh.Down">??</span></h6>
+                    </div>
+                    <div class="col-6">
+                      <h5 class="card-title">
+                        RiseShooter
+                      </h5>
+                      <h6 class="text-primary">Dgree: <span class="badge badge-secondary" id="Sh.Up">??</span></h6>
+                      <h6 class="text-primary">ErrorDegree: <span class="badge badge-secondary" id="Sh.Down">??</span></h6>
                     </div>
                     <div class="col-4">
                       <h5>Trans</h5>
-                      Power: <span class="badge badge-secondary" id="transPower">??</span>
-                      <div class="progress">
-                        <div class="progress-bar bg-info progress-bar-striped" role="progressbar" style="width: 50%"
-                          id="transPowerB"></div>
-                      </div>
-                      Dist: <span class="badge badge-secondary" id="transDist">??</span>
-                      <div class="progress">
-                        <div class="progress-bar bg-info" role="progressbar" style="width: 50%" id="transDistB"></div>
-                      </div>
+                      Bool: <span class="badge badge-danger" id="Trans.Bool">??</span>
                     </div>
   
                     <div class="col-4">
                       <h5>Intake</h5>
-                      Power: <span class="badge badge-secondary" id="intakePower">??</span>
-                      <div class="progress">
-                        <div class="progress-bar bg-info progress-bar-striped" role="progressbar" style="width: 50%"
-                          id="intakePowerB"></div>
-                      </div>
-                      <div class="mt-2">
-                        <h6>
-                          SOL: <span class="badge badge-secondary" id="intakeSOL">n/a</span>
-                        </h6>
-                      </div>
+                      State: <span class="badge badge-danger" id="intakeState">??</span>
                     </div>
                     <div class="col-4">
                       <h5>Hook</h5>
-                      Power: <span class="badge badge-secondary" id="climbPower">??</span>
-                      <div class="progress">
-                        <div class="progress-bar bg-info progress-bar-striped" role="progressbar" style="width: 50%"
-                          id="climbPowerB"></div>
-                      </div>
+                      <h6 class="text-primary">HR: <span class="badge badge-secondary" id="Hook.HR">??</span></h6>
+                      <h6 class="text-primary">LR: <span class="badge badge-secondary" id="Hook.LR">??</span></h6>
                     </div>
-                    <div class="col-4">
+                    <div class="col-12">
                       <h5>gyro</h5>
+                      <div class="card-header" style="width: 200px; height: 200px;"></div>
 
                     </div>
                   </div>
@@ -212,27 +188,54 @@
               </div>
               <div id="SettingT" class="container tab-pane">
                 <h3>Setting</h3>
-                <h5>Encoder</h5>
+                <h5>PID</h5>
                 <div class="content-wrapper">
                   <div class="row">
-                    <div class="col-4">
-                      <h6>Left: <span class="badge badge-secondary mr-2" id="speedL">??</span><br>LeftEnc: <span
-                        class="badge badge-danger" id="lEnc">??</span></h6>
-                      <canvas id="speedLCan"></canvas>
+                    <div class="col-5">
+                      <h6 class="card-title text-primary">
+                        RiseShooter
+                      </h6>
+                      <h6>Set: <span class="badge badge-secondary mr-2" id="R.ShooterSet">??</span><br>P: <span
+                        class="badge badge-secondary mr-2" id="R.ShooterP">??</span><br>I: <span class="badge badge-secondary mr-2" id="R.ShooterI">??</span><br>D: <span class="badge badge-secondary mr-2" id="R.ShooterD">??</span></h6>
+                      
                     </div>
                     <div class="col-4">
-                      <h6>Right: <span class="badge badge-secondary mr-2" id="speedR">??</span><br>RightEnc: <span
-                        class="badge badge-danger" id="rEnc">??</span></h6>
-                      <canvas id="speedRCan"></canvas>
-                    </div> 
-                  </div>
-                </div>
-                  
+                      <h6 class="text-primary">Shooter</h6>
+                      <h6>Set: <span class="badge badge-secondary mr-2" id="ShooterSet">??</span><br>P: <span
+                        class="badge badge-secondary mr-2" id="ShooterP">??</span><br>I: <span class="badge badge-secondary mr-2" id="ShooterI">??</span><br>D: <span class="badge badge-secondary mr-2" id="ShooterD">??</span></h6>
+                    </div>
+                    <div class="col-12">
+                      <h6 class="text-primary">Hook</h6>
+                      <div class="col-12">
+                        <h6 class="text-danger">L</h6>
+                        <h6>Set: <span class="badge badge-secondary mr-2" id="L.HookSet">??</span>P: <span
+                          class="badge badge-secondary mr-2" id="L.HookP">??</span>I: <span class="badge badge-secondary mr-2" id="L.HookI">??</span>D: <span class="badge badge-secondary mr-2" id="L.HookD">??</span></h6>
+                      </div>
+                      <div class="col-12">
+                        <h6 class="text-danger">HL</h6>
+                        <h6>Set: <span class="badge badge-secondary mr-2" id="HL.HookSet">??</span>P: <span
+                          class="badge badge-secondary mr-2" id="HL.HookP">??</span>I: <span class="badge badge-secondary mr-2" id="HL.HookI">??</span>D: <span class="badge badge-secondary mr-2" id="HL.HookD">??</span></h6>
+                      </div>
+                      <div class="col-12">
+                        <h6 class="text-danger">HR</h6>
+                        <h6>Set: <span class="badge badge-secondary mr-2" id="HR.HookSet">??</span>P: <span
+                          class="badge badge-secondary mr-2" id="HR.HookP">??</span>I: <span class="badge badge-secondary mr-2" id="HR.HookI">??</span>D: <span class="badge badge-secondary mr-2" id="HR.HookD">??</span></h6>
+                      </div>
+                    </div>
+                    <div class="col-12">
+                      <h6 class="text-primary">FeedForward</h6>
+                      <div class="col-12">
+                        <h6 class="text-danger">SU</h6>
+                        <h6>KS: <span class="badge badge-secondary mr-2" id="FF.SU.KS">??</span>KU: <span
+                          class="badge badge-secondary mr-2" id="FF.SU.KU">??</span>KA: <span class="badge badge-secondary mr-2" id="FF.SU.KA">??</span>
+                      </div>
+                      <div class="col-12">
+                        <h6 class="text-danger">SD</h6>
+                        <h6>KS: <span class="badge badge-secondary mr-2" id="FF.SD.KS">??</span>KU: <span
+                          class="badge badge-secondary mr-2" id="FF.SD.KU">??</span>KA: <span class="badge badge-secondary mr-2" id="FF.SD.KA">??</span>
+                      </div>
 
-                <div class="row justify-content-start">
-                  <div class="col-12">
-                    <h5>PID</h5>
-                    
+                    </div>
                   </div>
                 </div>
               </div>
@@ -312,7 +315,26 @@
               </div>
               <div id="AutoT" class="container tab-pane">
                 <h3>Auto</h3>
+                <div class="content-wrapper">
+                  <div class="row">
+                    <div class="col-7">
+                      <h5>DriveBase</h5>
+                      
+                        <h6 class="text-primary">Pose2d</h6>
+                        <h6 class="text-danger">X:<span class="badge badge-secondary mr-2" id="Pose2d.X">??</h6>
+                        <h6 class="text-danger">Y:<span class="badge badge-secondary mr-2" id="Pose2d.Y">??</h6>
+                        <h6 class="text-danger">Rotation:<span class="badge badge-secondary mr-2" id="Pose2d.Rotation">??</h6>
+                      
+                    </div>
+                    <div class="col-4">
+                      <h5>gyro</h5>
+                      <div class="card-header" style="width: 100px; height: 100px;"></div>
+
+                    </div>
+                  </div>
+                </div>
                 <div class="container">
+                  
                   <div class="top" id="top">
               
                   </div>
@@ -322,6 +344,8 @@
                     <label><input type="checkbox" class="option" value="Option 3"> Option 3</label><br>
                   </div>
                 </div>
+                
+                
                 
               </div>
             </div>
